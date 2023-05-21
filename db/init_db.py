@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 import crud
 import schemas
 from core.config import settings
-from db import base  # noqa: F401
 from db.session import engine
 from db.base_class import Base
 
