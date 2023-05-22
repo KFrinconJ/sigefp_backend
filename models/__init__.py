@@ -20,3 +20,4 @@ from .registro_semanal import RegistroSemanal
 from .periodo_academico import PeriodoAcademico
 from .estado_semanal import EstadoSemanal
 from .archivo_evidencia import ArchivoEvidencia
+from .nivel_programa_academico import NivelProgramaAcademico

@@ -13,5 +13,7 @@ class Nivel(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, index=True)
 
+    # NivelProgramaAcademico
+    niveles_programas_academicos = relationship("NivelProgramaAcademico", back_populates="nivel")
     # ProgramaAcademico
     programa_academico = relationship("ProgramaAcademico", back_populates="nivel")
