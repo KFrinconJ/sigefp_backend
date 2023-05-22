@@ -14,17 +14,18 @@ if TYPE_CHECKING:
 class SubfuncionSustantiva(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, index=True)
-    horas = Column(Integer, nullable=False)
+    horas = Column(Integer, index=True)
 
     # PeridoAcademico
-    periodo_academico = relationship(
-        "PeriodoAcademico", back_populates="subfuncion_sustantiva"
-    )
-    periodo_academico_id = Column(Integer, ForeignKey("periodoAcademico.id"))
-  
-    # FuncionSustantiva
-    funcion_sustantiva = relationship( "FuncionSustantiva", back_populates="subfuncion_sustantiva")
-    funcion_sustantiva_id = Column(Integer, ForeignKey("funcionSustantiva.id"))
+    periodo_academico_id = Column(Integer, ForeignKey('periodoacademico.id'))
+    periodo_academico = relationship("PeriodoAcademico", back_populates="subfunciones_sustantivas")
 
-    #SubfuncionSustantivaUsuario
-    subfuncion_sustantiva_usuario = relationship(  "SubfuncionSustantivaUsuario", back_populates="subfuncion_sustantiva")
+    
+
+
+    # subfunciones_sustantivas_usuarios = relationship("SubfuncionSustantivaUsuario", back_populates="subfuncion_sustantiva")
+    subfunciones_sustantivas_usuarios = relationship("SubfuncionSustantivaUsuario", back_populates="subfuncion_sustantiva")
+
+
+    funcion_sustantiva_id = Column(Integer, ForeignKey('funcionsustantiva.id'))
+    funcion_sustantiva = relationship("FuncionSustantiva", back_populates="subfunciones_sustantivas")

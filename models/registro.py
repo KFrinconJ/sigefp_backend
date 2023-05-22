@@ -13,12 +13,15 @@ if TYPE_CHECKING:
 class Registro(Base):
     id = Column(Integer, primary_key=True, index=True)
 
-    cantidad_semanas = Column(Integer, nullable=False)
+    cantidad_semanas = Column(Integer, index=True)
 
     # PeriodoAcademico
-    periodo_academico = relationship("PeriodoAcademico", back_populates="registro")
-    periodo_academico_id = Column(Integer, ForeignKey("periodo_academico.id"))
-
-    #SubfuncionSustantiva_Usuario
-    subfuncion_sustantiva_usuario = relationship("SubfuncionSustantivaUsuario", back_populates="registro")
-    subfuncion_sustantiva_usuario_id = Column(Integer, ForeignKey("subfuncion_sustantiva_usuario.id"))
+    periodo_academico_id = Column(Integer, ForeignKey("periodoacademico.id"))
+    periodo_academico = relationship("PeriodoAcademico", back_populates="registros")
+    # SubfuncionSustantiva_Usuario
+    subfunciones_usuarios = relationship(
+        "SubfuncionSustantivaUsuario", back_populates="registro"
+    )
+    
+    #RegistroSemanal
+    registro_semanal = relationship("RegistroSemanal", back_populates="registro")

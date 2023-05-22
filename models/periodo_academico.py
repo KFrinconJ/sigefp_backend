@@ -14,11 +14,17 @@ class PeriodoAcademico(Base):
     fechaInicio = Column(Date, index=True)
     fechaFinal = Column(Date, index=True)
     estado = Column(Boolean, default=True)
-    canitdad_semanas = Column(Integer, nullable=False)
-    nombre = Column(String, index=True)
-    horas = Column(Integer, nullable=False)
-
-    # SubfuncionSustantiva
-    subfuncion_sustantiva = relationship(
-        "SubfuncionSustantiva", back_populates="periodo_academico"
+    canitdad_semanas = Column(
+        Integer,
     )
+    nombre = Column(String, index=True)
+    horas = Column(
+        Integer,
+    )
+    
+    subfunciones_sustantivas = relationship("SubfuncionSustantiva", back_populates="periodo_academico")
+
+
+
+    # Registro
+    registros = relationship("Registro", back_populates="periodo_academico")

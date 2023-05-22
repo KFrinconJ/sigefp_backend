@@ -14,4 +14,4 @@ class Modalidad(Base):
     nombre = Column(String, index=True)
 
     # ProgramaAcademico
-    programa_academico = relationship("ProgramaAcademico", back_populates="area")
+    programa_academico = relationship("ProgramaAcademico", back_populates="modalidad")

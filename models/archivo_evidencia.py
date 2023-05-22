@@ -12,11 +12,11 @@ if TYPE_CHECKING:
 class ArchivoEvidencia(Base):
     id = Column(Integer, primary_key=True, index=True)
 
-    nombre = Column(String, nullable=False)
-    ubicacion = Column(String, nullable=False)
+    nombre = Column(String, )
+    ubicacion = Column(String, )
 
     # RegistroSemanal
     registro_semanal = relationship(
         "RegistroSemanal", back_populates="archivo_evidencia"
     )
-    registro_semanal_id = Column(Integer, ForeignKey("registro_semanal.id"))
+    registro_semanal_id = Column(Integer, ForeignKey("registrosemanal.id"))

@@ -18,8 +18,8 @@ class ProgramaAcademico(Base):
     nombre = Column(String, index=True)
 
     # Adscripcion
-    adscripcion_id = Column(Integer, ForeignKey("facultad.id"))
-    adscripcion = relationship("Adscripcion", back_populates="programa_academico")
+    adscripcion_id = Column(Integer, ForeignKey("adscripcion.id"))
+    adscripciones = relationship("Adscripcion", back_populates="programa_academico")
 
     # Nivel
     nivel_id = Column(Integer, ForeignKey("nivel.id"))
@@ -33,5 +33,7 @@ class ProgramaAcademico(Base):
     area_id = Column(Integer, ForeignKey("area.id"))
     area = relationship("Area", back_populates="programa_academico")
 
-    # Funcion_sustantiva
-    funciones_sustantiva = relationship("FuncionSustantiva", back_populates="programa_academico")
+    # FuncionSustantiva
+    funciones_sustantivas = relationship("FuncionSustantiva", back_populates="programa_academico")
+
+

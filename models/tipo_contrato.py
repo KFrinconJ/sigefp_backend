@@ -12,4 +12,4 @@ if TYPE_CHECKING:
 class TipoContrato(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, index=True)
-    contratos = relationship("Contrato", back_populates="tipoContrato")
+    contratos = relationship("Contrato", back_populates="tipo_contrato")

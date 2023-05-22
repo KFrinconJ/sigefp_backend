@@ -15,3 +15,7 @@ class Oficina(Base):
     #User
     user_id = Column(Integer, ForeignKey("user.id"))
     user = relationship("User", back_populates="oficinas")
+
+    #FuncionesSustantivas
+    funciones_sustantivas = relationship("FuncionSustantiva", back_populates="oficina")
+    

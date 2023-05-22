@@ -8,6 +8,7 @@ from db.base_class import Base
 if TYPE_CHECKING:
     from .programa_academico import ProgramaAcademico
     from .subfuncion_sustantiva import SubfuncionSustantiva
+    from .estado_semanal import EstadoSemanal
 
 
 class RegistroSemanal(Base):
@@ -18,13 +19,18 @@ class RegistroSemanal(Base):
     fechaFinal = Column(Date, index=True)
 
     descripcion = Column(String, index=True)
-    horaEnvio = Column(Integer, nullable=False)
+    horaEnvio = Column(DateTime, index=True)
 
     # EstadoSemanal
-    estado_id = Column(Integer, ForeignKey("estado_semanal.id"))
-    estado = relationship("EstadoSemanal", back_populates="registro_semanal")
-    # SubfuncionSustantiva
-    SubfuncionSustantiva = relationship(
-        "SubfuncionSustantiva", back_populates="registro_semanal"
-    )
-    SubfuncionSustantiva_id = Column(Integer, ForeignKey("subfuncion_sustantiva.id"))
+    estado_id = Column(Integer, ForeignKey("estadosemanal.id"))
+    estado_semanal = relationship("EstadoSemanal", back_populates="registro_semanal")
+
+    #Registro
+    registro_id = Column(Integer, ForeignKey("registro.id"))
+    registro = relationship("Registro", back_populates="registro_semanal")
+
+    #Archivo
+    archivo_evidencia = relationship("ArchivoEvidencia", back_populates="registro_semanal")
+
+
+

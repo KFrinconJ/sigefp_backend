@@ -1,4 +1,3 @@
-from .item import Item
 from .user import User
 from .rol import Rol
 from .contrato import Contrato

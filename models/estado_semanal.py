@@ -13,8 +13,7 @@ if TYPE_CHECKING:
 class EstadoSemanal(Base):
     id = Column(Integer, primary_key=True, index=True)
 
-    estado = Column(Integer, nullable=False)
+    estado = Column(Integer, )
 
     #RegistroSemanal
     registro_semanal = relationship("RegistroSemanal", back_populates="estado_semanal")
-    registro_semanal_id = Column(Integer, ForeignKey("registro_semanal.id"))

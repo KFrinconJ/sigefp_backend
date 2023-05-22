@@ -14,11 +14,11 @@ class Contrato(Base):
     id = Column(Integer, primary_key=True, index=True)
     fechaInicio = Column(Date, index=True)
     fechaFinal = Column(Date, index=True)
+    numero = Column(Integer, index=True)
 
     # User
-    user_id = Column(Integer, ForeignKey("user.id"))
     user = relationship("User", back_populates="contratos")
 
-    # Tipo Contrato
-    tipoContrato_id = Column(Integer, ForeignKey("tipoContrato.id"))
-    tipoContrato = relationship("TipoContrato", back_populates="contratos")
+ # TipoContrato
+    tipo_contrato_id = Column(Integer, ForeignKey("tipocontrato.id"))
+    tipo_contrato = relationship("TipoContrato", back_populates="contratos")
