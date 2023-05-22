@@ -2,8 +2,6 @@ import secrets
 from typing import Any, Dict, List, Optional, Union
 
 from pydantic import AnyHttpUrl, BaseModel, EmailStr, PostgresDsn, validator
-from sqlalchemy.orm import declarative_base
-
 
 
 class Settings(BaseModel):
@@ -39,7 +37,9 @@ class Settings(BaseModel):
     POSTGRES_PASSWORD = "postPassword"
     POSTGRES_DB = "fs_pa_pg"
 
-    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}/{POSTGRES_DB}"
+    SQLALCHEMY_DATABASE_URI: Optional[
+        PostgresDsn
+    ] = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}/{POSTGRES_DB}"
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
@@ -60,7 +60,6 @@ class Settings(BaseModel):
     FIRST_SUPERUSER: EmailStr = "admin@sigefp.com"
     FIRST_SUPERUSER_PASSWORD: str = "admin"
     USERS_OPEN_REGISTRATION: bool = False
-
 
 
 settings = Settings()
