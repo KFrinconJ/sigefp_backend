@@ -7,6 +7,8 @@ from .crud_nivel_programa_academico import nivel_programa_academico
 from .crud_nivel import nivel
 from .crud_tipo_contrato import tipo_contrato
 from .crud_vinculacion import vinculacion
+
+from .crud_adscripcion import adscripcion
 # For a new basic set of CRUD operations you could just do
 
 # from .base import CRUDBase
