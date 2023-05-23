@@ -69,42 +69,33 @@ def update_user_me(
     return user
 
 
+@router.get("/by_contratos_id/{contratos_id}", response_model=schemas.User)
+def get_users_by_contratos_id(
+    contratos_id: int,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.current_user_active_admin),
+) -> Any:
+    """
+    Get users by contratos_id.
+    """
+    user = crud.user.get_by_contratos_id(db, contratos_id=contratos_id)
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="No user with this contratos_id exists in the system",
+        )
+    return user
+
+
 @router.get("/me", response_model=schemas.User)
 def read_user_me(
     db: Session = Depends(deps.get_db),
-    current_user: models.User = Depends(deps.get_current_active_user),
+    current_user: models.User = Depends(deps.current_active_admin_or_rfs_or_docente),
 ) -> Any:
     """
-    Get current user.
+    Get current user (accessible to admin docente and rfs).
     """
     return current_user
-
-
-@router.post("/open", response_model=schemas.User)
-def create_user_open(
-    *,
-    db: Session = Depends(deps.get_db),
-    password: str = Body(...),
-    email: EmailStr = Body(...),
-    full_name: str = Body(None),
-) -> Any:
-    """
-    Create new user without the need to be logged in.
-    """
-    if not settings.USERS_OPEN_REGISTRATION:
-        raise HTTPException(
-            status_code=403,
-            detail="Open user registration is forbidden on this server",
-        )
-    user = crud.user.get_by_email(db, email=email)
-    if user:
-        raise HTTPException(
-            status_code=400,
-            detail="The user with this username already exists in the system",
-        )
-    user_in = schemas.UserCreate(password=password, email=email, full_name=full_name)
-    user = crud.user.create(db, obj_in=user_in)
-    return user
 
 
 @router.get("/{user_id}", response_model=schemas.User)
@@ -124,6 +115,45 @@ def read_user_by_id(
             status_code=400, detail="The user doesn't have enough privileges"
         )
     return user
+
+
+# Nuevo
+
+
+@router.get("/by_role/{role}", response_model=List[schemas.User])
+def get_users_by_role(
+    rol: int,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.current_user_active_admin),
+) -> Any:
+    """
+    Get users by role.
+    """
+    users = crud.user.get_multi_by_role(db, rol_id=rol)
+    if not users or len(users) == 0:
+        raise HTTPException(
+            status_code=404,
+            detail="The users with this role does not exist in the system",
+        )
+    return users
+
+
+@router.get("/by_vinculacion/{vinculacion}", response_model=List[schemas.User])
+def get_users_by_vinculacion(
+    vinculacion: int,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.current_user_active_admin),
+) -> Any:
+    """
+    Get users by vinculacion.
+    """
+    users = crud.user.get_multi_by_vinculacion(db, vinculacion_id=vinculacion)
+    if not users or len(users) == 0:
+        raise HTTPException(
+            status_code=404,
+            detail="The users with this vinculation does not exist in the system",
+        )
+    return users
 
 
 @router.put("/{user_id}", response_model=schemas.User)

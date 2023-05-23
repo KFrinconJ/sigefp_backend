@@ -54,15 +54,6 @@ def get_current_active_user(
     return current_user
 
 
-def get_current_active_superuser(
-    current_user: models.User = Depends(get_current_user),
-) -> models.User:
-    if not crud.user.is_superuser(current_user):
-        raise HTTPException(
-            status_code=400, detail="The user doesn't have enough privileges"
-        )
-    return current_user
-
 
 def current_user_active_admin(
     current_user: models.User = Depends(get_current_user),
@@ -74,7 +65,7 @@ def current_user_active_admin(
     return current_user
 
 
-def get_current_active_rfs(
+def current_active_rfs(
     current_user: models.User = Depends(get_current_user),
 ) -> models.User:
     if not crud.user.is_rfs(current_user):
@@ -84,7 +75,18 @@ def get_current_active_rfs(
     return current_user
 
 
-def get_current_active_docente(
+
+def current_active_admin_or_rfs_or_docente(
+    current_user: models.User = Depends(get_current_user),
+) -> models.User:
+    if not crud.user.is_admin(current_user) and not crud.user.is_rfs(current_user) and not crud.user.is_docente(current_user):
+        raise HTTPException(
+            status_code=400, detail="The user doesn't have enough privileges"
+        )
+    return current_user
+
+
+def current_active_docente(
     current_user: models.User = Depends(get_current_user),
 ) -> models.User:
     if not crud.user.is_docente(current_user):
@@ -94,7 +96,7 @@ def get_current_active_docente(
     return current_user
 
 
-def get_current_active_predeterminado(
+def current_active_predeterminado(
     current_user: models.User = Depends(get_current_user),
 ) -> models.User:
     if not crud.user.is_predeterminado(current_user):

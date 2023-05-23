@@ -9,7 +9,9 @@ from schemas.contrato import ContratoCreate, ContratoUpdate
 
 
 class CRUDContrato(CRUDBase[Contrato, ContratoCreate, ContratoUpdate]):
-    def get_by_fechaInicio(self, db: Session, *, fechaInicio: Date) -> Optional[Contrato]:
+    def get_by_fechaInicio(
+        self, db: Session, *, fechaInicio: Date
+    ) -> Optional[Contrato]:
         return db.query(Contrato).filter(Contrato.fechaInicio == fechaInicio).first()
 
     def get_by_fechaFinal(self, db: Session, *, fechaFinal: Date) -> Optional[Contrato]:
@@ -18,8 +20,14 @@ class CRUDContrato(CRUDBase[Contrato, ContratoCreate, ContratoUpdate]):
     def get_by_numero(self, db: Session, *, numero: int) -> Optional[Contrato]:
         return db.query(Contrato).filter(Contrato.numero == numero).first()
 
-    def get_by_tipo_contrato_id(self, db: Session, *, tipo_contrato_id: int) -> Optional[Contrato]:
-        return db.query(Contrato).filter(Contrato.tipo_contrato_id == tipo_contrato_id).first()
+    def get_by_tipo_contrato_id(
+        self, db: Session, *, tipo_contrato_id: int
+    ) -> Optional[Contrato]:
+        return (
+            db.query(Contrato)
+            .filter(Contrato.tipo_contrato_id == tipo_contrato_id)
+            .first()
+        )
 
     def create(self, db: Session, *, obj_in: ContratoCreate) -> Contrato:
         db_obj = Contrato(
@@ -34,7 +42,11 @@ class CRUDContrato(CRUDBase[Contrato, ContratoCreate, ContratoUpdate]):
         return db_obj
 
     def update(
-        self, db: Session, *, db_obj: Contrato, obj_in: Union[ContratoUpdate, Dict[str, Any]]
+        self,
+        db: Session,
+        *,
+        db_obj: Contrato,
+        obj_in: Union[ContratoUpdate, Dict[str, Any]]
     ) -> Contrato:
         if isinstance(obj_in, dict):
             update_data = obj_in
@@ -50,6 +62,15 @@ class CRUDContrato(CRUDBase[Contrato, ContratoCreate, ContratoUpdate]):
 
     def get_all(self, db: Session) -> List[Contrato]:
         return db.query(Contrato).all()
+
+    def get_by_tipo_contrato(
+        self, db: Session, tipo_contrato_id: int
+    ) -> List[Contrato]:
+        return (
+            db.query(Contrato)
+            .filter(Contrato.tipo_contrato_id == tipo_contrato_id)
+            .all()
+        )
 
 
 contrato = CRUDContrato(Contrato)

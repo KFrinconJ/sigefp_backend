@@ -12,34 +12,22 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def get_by_email(self, db: Session, *, email: str) -> Optional[User]:
         return db.query(User).filter(User.email == email).first()
 
-    def get_by_rol_id(self, db: Session, *, rol_id: int) -> Optional[User]:
-        return db.query(User).filter(User.rol_id == rol_id).all()
-
     def get_by_contratos_id(self, db: Session, *, contratos_id: int) -> Optional[User]:
-        return db.query(User).filter(User.contratos_id.contains(contratos_id)).all()
-
-    def get_by_vinculaciones_id(
-        self, db: Session, *, vinculaciones_id: int
-    ) -> Optional[User]:
-        return (
-            db.query(User)
-            .filter(User.vinculaciones_id.contains(vinculaciones_id))
-            .all()
-        )
+        return db.query(User).filter(User.contratos_id == contratos_id).first()
 
     def is_active(self, user: User) -> bool:
         return user.is_active
 
     def is_admin(self, user: User) -> bool:
         return user.rol_id == 1
-    
-    #Es responsable de la funcion sustantiva
+
+    # Es responsable de la funcion sustantiva
     def is_rfs(self, user: User) -> bool:
         return user.rol_id == 2
-    
+
     def is_docente(self, user: User) -> bool:
         return user.rol_id == 3
-    
+
     def is_predeterminado(self, user: User) -> bool:
         return user.rol_id == 4
 
@@ -80,7 +68,13 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
 
     def get_multi(self, db: Session) -> List[User]:
         return db.query(User).all()
-    
+
+    def get_multi_by_role(self, db: Session, rol_id: int) -> List[User]:
+        return db.query(User).filter(User.rol_id == rol_id).all()
+
+
+    def get_multi_by_vinculacion(self, db: Session, vinculacion_id: int) -> List[User]:
+        return db.query(User).filter(User.vinculaciones_id == vinculacion_id).all()
 
     def authenticate(self, db: Session, *, email: str, password: str) -> Optional[User]:
         user = self.get_by_email(db, email=email)
@@ -89,7 +83,6 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         if not verify_password(password, user.hashed_password):
             return None
         return user
-
 
 
 user = CRUDUser(User)

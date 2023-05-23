@@ -25,7 +25,11 @@ class CRUDAdscripcion(CRUDBase[Adscripcion, AdscripcionCreate, AdscripcionUpdate
         return db_obj
 
     def update(
-        self, db: Session, *, db_obj: Adscripcion, obj_in: Union[AdscripcionUpdate, Dict[str, Any]]
+        self,
+        db: Session,
+        *,
+        db_obj: Adscripcion,
+        obj_in: Union[AdscripcionUpdate, Dict[str, Any]]
     ) -> Adscripcion:
         if isinstance(obj_in, dict):
             update_data = obj_in
@@ -38,6 +42,9 @@ class CRUDAdscripcion(CRUDBase[Adscripcion, AdscripcionCreate, AdscripcionUpdate
         db.delete(obj)
         db.commit()
         return obj
+
+    def get_by_id_usuario(self, db: Session, user_id: int) -> List[Adscripcion]:
+        return db.query(Adscripcion).filter(Adscripcion.user_id == user_id).all()
 
     def get_all(self, db: Session) -> List[Adscripcion]:
         return db.query(Adscripcion).all()

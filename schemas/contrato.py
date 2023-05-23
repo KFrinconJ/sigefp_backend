@@ -31,11 +31,13 @@ class ContratoInDBBase(ContratoBase):
         orm_mode = True
 
 
-# Additional properties to return via API
-class Contrato(ContratoInDBBase):
-    pass
 
 
 # Additional properties stored in DB
 class ContratoInDB(ContratoInDBBase):
+    pass
+
+
+# Additional properties to return via API
+class Contrato(ContratoInDBBase):
     pass
