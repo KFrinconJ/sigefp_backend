@@ -9,7 +9,7 @@ class PeriodoAcademicoBase(BaseModel):
     fechaInicio: Optional[Date] = None
     fechaFinal: Optional[Date] = None
     estado: Optional[bool] = True
-    canitdad_semanas: Optional[int] = None
+    cantidad_semanas: Optional[int] = None
     nombre: Optional[str] = None
     horas: Optional[int] = None
 
@@ -18,7 +18,7 @@ class PeriodoAcademicoBase(BaseModel):
 class PeriodoAcademicoCreate(PeriodoAcademicoBase):
     fechaInicio: Date
     fechaFinal: Date
-    canitdad_semanas: int
+    cantidad_semanas: int
     nombre: str
     horas: int
 

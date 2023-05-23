@@ -1,6 +1,10 @@
 import random
 import string
 from typing import Dict
+from random import uniform
+from datetime import date as Date
+from random import randint
+
 
 from fastapi.testclient import TestClient
 
@@ -25,3 +29,18 @@ def get_superuser_token_headers(client: TestClient) -> Dict[str, str]:
     a_token = tokens["access_token"]
     headers = {"Authorization": f"Bearer {a_token}"}
     return headers
+
+
+def random_date(start: Date = Date(2021, 1, 1), end: Date = Date(2021, 12, 31)) -> Date:
+    # Convertir las fechas a números reales
+    start_number = start.toordinal()
+    end_number = end.toordinal()
+    # Generar un número real aleatorio entre las fechas
+    random_number = uniform(start_number, end_number)
+    # Convertir el número real a fecha
+    random_date = Date.fromordinal(int(random_number))
+    return random_date
+
+
+def random_integer(min: int = 1, max: int = 1000) -> int:
+    return randint(min, max)

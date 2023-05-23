@@ -14,7 +14,7 @@ class PeriodoAcademico(Base):
     fechaInicio = Column(Date, index=True)
     fechaFinal = Column(Date, index=True)
     estado = Column(Boolean, default=True)
-    canitdad_semanas = Column(
+    cantidad_semanas = Column(
         Integer,
     )
     nombre = Column(String, index=True)

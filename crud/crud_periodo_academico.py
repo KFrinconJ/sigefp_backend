@@ -18,7 +18,7 @@ class CRUDPeriodoAcademico(CRUDBase[PeriodoAcademico, PeriodoAcademicoCreate, Pe
         db_obj = PeriodoAcademico(
             fechaInicio=obj_in.fechaInicio,
             fechaFinal=obj_in.fechaFinal,
-            canitdad_semanas=obj_in.canitdad_semanas,
+            cantidad_semanas=obj_in.cantidad_semanas,
             nombre=obj_in.nombre,
             horas=obj_in.horas,
         )
